@@ -1,0 +1,164 @@
+<div class="page-container" *ngIf="this.user">
+  <header class="header">
+    <h1>Bienvenue, {{ this.user.prenom }} {{ this.user.nom }}</h1>
+    <button (click)="handleLogout()" type="button" class="btn btn-outline-danger">
+      Se déconnecter
+    </button>
+  </header>
+
+  <div class="content">
+    <section class="sales-form-section">
+      <h2>Nouvelle vente</h2>
+      <form class="sales-form" [formGroup]="salesForm" (ngSubmit)="ajouterVente()">
+        <div class="form-fields">
+          <div class="form-group">
+            <label for="nom">Nom</label>
+            <input type="text" id="nom" formControlName="nom" required />
+          </div>
+
+          <div class="form-group">
+            <label for="prenom">Prénom</label>
+            <input type="text" id="prenom" formControlName="prenom" required />
+          </div>
+
+          <div class="form-group">
+            <label for="numeroDossier">Numéro de dossier</label>
+            <input type="text" id="numeroDossier" formControlName="numeroDossier" required />
+          </div>
+
+          <div class="form-group">
+            <label for="pax">Nombre de personnes</label>
+            <input type="number" id="pax" formControlName="pax" required />
+          </div>
+
+          <div class="form-group">
+            <label for="dateValidation">Date de validation</label>
+            <input type="date" id="dateValidation" formControlName="dateValidation" required />
+          </div>
+
+          <div class="form-group">
+            <label for="dateDepart">Date de départ</label>
+            <input type="date" id="dateDepart" formControlName="dateDepart" required />
+          </div>
+
+          <div class="form-group">
+            <label for="tourOperateur">Tour Operateur</label>
+            <select id="tourOperateur" formControlName="tourOperateur" required>
+              <option value="FRAM">FRAM</option>
+              <option value="AUTRE">Autres</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="venteTotal">Montant total</label>
+            <input type="number" id="venteTotal" formControlName="venteTotal" required />
+          </div>        
+
+          <div class="form-group">
+            <label for="fraisAgence">Frais d'agence</label>
+            <input type="number" id="fraisAgence" formControlName="fraisAgence" required />
+          </div>
+          <div class="form-group">
+            <label for="assurance">Assurance souscrite</label>
+            <input class="form-check-input" type="checkbox" id="assurance" formControlName="assurance" />
+          </div>
+          <div class="form-group" *ngIf="salesForm.get('assurance')?.value">
+            <label for="montantAssurance">Montant de l'assurance</label>
+            <input type="number" id="montantAssurance" formControlName="montantAssurance" required />
+          </div>
+
+          <div class="form-group" *ngIf="salesForm.get('assurance')?.value">
+            <label for="totalSansAssurance">Total sans assurance</label>
+            <input type="number" id="totalSansAssurance" formControlName="totalSansAssurance" required />
+          </div>
+        </div>
+        <button type="submit" class="btn btn-outline-success add-vente">Ajouter</button>
+      </form>
+
+    </section>
+
+    <section class="sales-summary" *ngIf="this.bilan">
+      <div class="bilan-vente">
+        <h5 class="display-6">Bilan des ventes</h5>
+        <div class="table-container">
+          <table class="summary-table">
+            <thead>
+              <tr>
+                <th>Objectif</th>
+                <th>Réalisé</th>
+                <th>% Réalisé</th>
+                <th>% FRAM</th>
+                <th>% Assurance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ this.bilan.objectif }}</td>
+                <td>{{ this.bilan.realise }}</td>
+                <td [appPercentageColor]="this.bilan.pourcentageRealise">{{ formatPercentage(this.bilan.pourcentageRealise) }}</td>
+                <td>{{ formatPercentage(this.bilan.pourcentageFram) }}</td>
+                <td>{{ formatPercentage(this.bilan.pourcentageAssurance) }}</td>
+                
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+        <div class="prime">
+          <h5 class="display-6">Primes brutes</h5>
+          <table class="summary-table">
+            <thead>
+              <tr>
+                <th>Type de prime</th>
+                <th>Montant</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>FRAM - Croisières</td>
+                <td>{{ this.bilan.framCroisieres }}</td>
+              </tr>
+              <tr>
+                <td>Autres TO</td>
+                <td>{{ this.bilan.autresTo }}</td>
+              </tr>
+              <tr>
+                <td>Assurances</td>
+                <td>{{ this.bilan.assurances }}</td>
+              </tr>
+              <tr>
+                <td><strong>Total des primes brutes</strong></td>
+                <td><strong>{{ this.bilan.totalPrimesBrutes }}</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </section>
+  </div>
+
+  <div  class="sales-list">
+    <h3>Liste des ventes</h3>
+    <table *ngIf="this.ventes" class="sales-table">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Prénom</th>
+          <th>Numéro de dossier</th>
+          <th>Date de validation</th>
+          <th>Montant total</th>
+          <th>Montant Assurance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let vente of this.ventes">
+          <td>{{ vente.nom }}</td>
+          <td>{{ vente.prenom }}</td>
+          <td>{{ vente.numeroDossier }}</td>
+          <td>{{ vente.dateValidation }}</td>
+          <td>{{ vente.venteTotal }}</td>
+          <td>{{ vente.montantAssurance}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

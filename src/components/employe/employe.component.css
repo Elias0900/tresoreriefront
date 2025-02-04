@@ -1,0 +1,232 @@
+.page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  background-color: #f4f7fb;
+  width: 100%;
+}
+
+header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+}
+
+
+
+
+.content {
+  display: flex;
+  gap: 30px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.sales-form-section,
+.sales-summary {
+  flex: 1;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  font-size: 22px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.form-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 8px;
+}
+
+input,
+select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+input:focus,
+select:focus {
+  border-color: #007bff;
+}
+
+
+
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.summary-table th,
+.summary-table td {
+  padding: 12px;
+  text-align: left;
+  font-size: 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+.sales-list {
+  width: 100%;
+  margin-top: 40px;
+}
+
+.sales-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+/* Flexibilité et largeur maximale pour la mise en page */
+.content {
+  display: flex;
+  gap: 30px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.sales-table th,
+.sales-table td {
+  padding: 12px;
+  text-align: left;
+  font-size: 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+.bilan-vente {
+  margin-bottom: 30px; /* Espace entre bilan et prime */
+}
+
+.prime {
+  margin-top: 20px; /* Un peu d'espace avant la section prime */
+}
+
+h2, h5 {
+  margin-bottom: 10px; /* Rapprochement des titres des tableaux */
+}
+
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px; /* Réduit l'espace au-dessus du tableau */
+}
+
+.summary-table th,
+.summary-table td {
+  padding: 12px;
+  text-align: left;
+  font-size: 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+.add-vente{
+  margin-top: 20px ;
+  width: 25%;
+}
+
+.page-container > div {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.sales-summary:hover, 
+.sales-form-section:hover, 
+.sales-list:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.sales-form input:hover, 
+.sales-form select:hover {
+  border-color: #000000; /* Vert Bootstrap */
+  box-shadow: 0 0 5px rgba(15, 26, 60, 0.5);
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+
+
+/* Media queries pour rendre le bouton de déconnexion et la mise en page responsive */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  header h1 {
+    font-size: 20px;
+  }
+
+  .logout-button {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 18px;
+    margin-top: 10px;
+  }
+
+  /* Ajustement de la disposition des sections de formulaire */
+  .content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .form-fields {
+    grid-template-columns: 1fr;
+  }
+
+  button {
+    padding: 12px;
+    font-size: 16px;
+  }
+
+  .summary-table, .sales-table {
+    font-size: 14px;
+  }
+
+  .sales-list {
+    margin-top: 20px;
+  }
+}
+
+/* Autres styles généraux pour les tableaux */
+.summary-table,
+.sales-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.summary-table th,
+.summary-table td,
+.sales-table th,
+.sales-table td {
+  padding: 12px;
+  text-align: left;
+  font-size: 16px;
+  border-bottom: 1px solid #ddd;
+}
