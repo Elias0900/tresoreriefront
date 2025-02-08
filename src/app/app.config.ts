@@ -5,6 +5,8 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { EmployeComponent } from '../components/employe/employe.component';
 import { authInterceptor } from '../interceptor/auth.interceptor';
 import { DirectorComponent } from '../components/director/director.component';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
 import { RoleGuard } from '../guard/roleGuard';
 
 
@@ -35,5 +37,8 @@ const routes: Routes = [
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),  provideRouter(routes),
-    provideHttpClient(withInterceptors([authInterceptor])),]
+    provideHttpClient(withInterceptors([authInterceptor])),  providePrimeNG({
+      theme: {
+          preset: Aura
+      }})]
 };

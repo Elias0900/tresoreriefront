@@ -1,0 +1,13 @@
+<p-fluid class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="col-span-2 xl:col-span-2">
+      <div class="card">
+        <div class="font-semibold text-xl mb-4">Graphique des ventes par jour</div>
+        <p-chart
+          type="line"
+          [data]="lineData"
+          [options]="lineOptions"
+        ></p-chart>
+      </div>
+    </div>
+  </p-fluid>
+  

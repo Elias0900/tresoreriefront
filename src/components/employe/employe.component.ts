@@ -90,6 +90,7 @@ export class EmployeComponent implements OnInit {
       next: (data) => {
         this.ventes = data;
         console.log('Ventes récupérées :', this.ventes);
+        this.getBilan();
       },
       error: (err) => {
         console.error('Erreur lors de la récupération des ventes', err);

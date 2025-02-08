@@ -1,11 +1,4 @@
 <div class="page-container" *ngIf="this.user">
-  <header class="header">
-    <h1>Bienvenue, {{ this.user.prenom }} {{ this.user.nom }}</h1>
-    <button (click)="handleLogout()" type="button" class="btn btn-outline-danger">
-      Se déconnecter
-    </button>
-  </header>
-
   <div class="content">
     <section class="sales-form-section">
       <h2>Nouvelle vente</h2>
