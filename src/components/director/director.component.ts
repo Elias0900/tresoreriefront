@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { ModalObjectifComponent } from "../modal-objectif/modal-objectif.component";
 import { AgenceVoyage } from '../../back/model/agenceVoyage';
 import { User } from '../../back/model/user';
+import { TopbarComponent } from "../topbar/topbar.component";
 
 
 @Component({
@@ -25,7 +26,7 @@ import { User } from '../../back/model/user';
     CommonModule,
     ProgressBar,
     TooltipModule,
-    DialogModule, ModalObjectifComponent],
+    DialogModule, ModalObjectifComponent, TopbarComponent],
   templateUrl: './director.component.html',
   styleUrls: ['./director.component.css']
 })

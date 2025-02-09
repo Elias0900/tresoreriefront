@@ -40,6 +40,8 @@ export class EmployeComponent implements OnInit {
     { id: 'totalSansAssurance', label: 'Total sans assurance', type: 'number', model: 'totalSansAssurance', validators: [Validators.required, Validators.min(0)] },
     { id: 'userId', type: 'number', model: 'userId' }
   ];
+  objectif: number = 0;    // Objectif par défaut
+
 
   constructor(private fb: FormBuilder) {
     this.salesForm = this.fb.group({});
@@ -151,9 +153,11 @@ export class EmployeComponent implements OnInit {
 
   loadUser() {
     const storedUser = localStorage.getItem('user');
+    const objectifStored = localStorage.getItem('user_objectif');
     if (storedUser) {
       try {
         this.user = JSON.parse(storedUser);
+        this.objectif = JSON.parse(objectifStored!);
       } catch (error) {
         console.error('Erreur de parsing du token', error);
         this.user = null;
