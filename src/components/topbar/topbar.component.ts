@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { User } from '../../back/model/models';
 import { Router } from '@angular/router';
+import { User } from '../../back/model/user';
 
 @Component({
   selector: 'app-topbar',

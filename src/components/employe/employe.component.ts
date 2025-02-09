@@ -1,9 +1,10 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { AuthControllerService, BilanControllerService, BilanDto, User, VenteControllerService, VenteDto } from '../../back';
+import { AuthControllerService, BilanControllerService, BilanDto, VenteControllerService, VenteDto } from '../../back';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PercentageColorDirective } from '../../directive/objectif.directive';
+import { User } from '../../back/model/user';
 
 @Component({
   selector: 'app-employe',

@@ -7,17 +7,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { AgenceVoyage } from './agenceVoyage';
 
 
-export interface User { 
+export interface AgenceVoyage { 
     id?: number;
     nom?: string;
-    prenom?: string;
-    email?: string;
-    password?: string;
-    role?: string;
-    token?: string;
-    agence?: AgenceVoyage;
+    objectif?: number;
 }
 

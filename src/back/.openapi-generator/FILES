@@ -1,10 +1,10 @@
 .gitignore
 README.md
 api.module.ts
+api/agenceVoyagecontroller.service.ts
 api/api.ts
 api/authController.service.ts
 api/bilanController.service.ts
-api/personController.service.ts
 api/venteController.service.ts
 configuration.ts
 encoder.ts
@@ -12,8 +12,8 @@ git_push.sh
 index.ts
 model/bilanDto.ts
 model/models.ts
-model/person.ts
-model/user.ts
+model/userDTO.ts
+model/userLoginResponseDTO.ts
 model/venteDto.ts
 model/ventesParJourDto.ts
 param.ts

@@ -3,7 +3,7 @@ import { ButtonModule } from 'primeng/button';
 import { ChartParJourComponent } from "../chart/chart-par-jour/chart-par-jour.component";
 import { ChartParMoisComponent } from "../chart/chart-par-mois/chart-par-mois.component";
 import { Subscription } from 'rxjs';
-import { VenteControllerService } from '../../back';
+import { AgenceVoyagecontrollerService, BilanControllerService, VenteControllerService } from '../../back';
 import { ListAllVenteComponent } from "../list-all-vente/list-all-vente.component";
 import { CommonModule } from '@angular/common';
 import { ProgressBar } from 'primeng/progressbar';
@@ -11,6 +11,8 @@ import {  TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
 import { FormsModule } from '@angular/forms';
 import { ModalObjectifComponent } from "../modal-objectif/modal-objectif.component";
+import { AgenceVoyage } from '../../back/model/agenceVoyage';
+import { User } from '../../back/model/user';
 
 
 @Component({
@@ -49,20 +51,51 @@ export class DirectorComponent implements OnInit, OnDestroy {
   };
   objectif: number = 0;    // Objectif par défaut
   progression: number | undefined ;     // Progression de l'objectif
+  agenceId: number | undefined ;     // Progression de l'objectif
   venteTotal: number = 0;      // Total des ventes
+  agence: AgenceVoyage | undefined;
+  user: User | null = null;
 
   subscription: Subscription = new Subscription();
   readonly venteService = inject(VenteControllerService);
-
+  readonly bilanService = inject(BilanControllerService);
+  readonly agenceService = inject(AgenceVoyagecontrollerService);
 
   constructor() {}
+  loadUserObj() {
+    const objectifStored = localStorage.getItem('user_objectif');
+    const agenceIdStored = localStorage.getItem('user_agenceId');
+    if (objectifStored) {
+      try {
+        this.objectif = JSON.parse(objectifStored);
+        this.agenceId = JSON.parse(agenceIdStored!);
+        console.log(this.agenceId)
+        console.log(this.objectif)
+      } catch (error) {
+        console.error('Erreur de parsing du token', error);
+        this.user = null;
+      }
+    }
+ 
+  }
+
 
 
   updateObjectif(newObjectif: number) {
     console.log("Nouvel objectif reçu :", newObjectif);
     this.objectif = newObjectif;
-    console.log("Objectif après mise à jour:", this.objectif);
-    this.calculateProgression(); // Recalculer immédiatement après mise à jour
+  
+    // Envoi de la mise à jour avec le bon paramètre
+    this.agenceService.updateObjectif(this.agenceId!, { objectif: newObjectif }).subscribe({
+      next: (updatedAgence: AgenceVoyage) => {
+        console.log("Objectif mis à jour avec succès:", updatedAgence.objectif);
+        this.objectif = updatedAgence.objectif!;
+        this.calculateProgression(); // Mise à jour correcte après la réponse du serveur
+      },
+      error: (err) => {
+        console.error("Erreur lors de la mise à jour de l'objectif :", err);
+      }
+    });
   }
   
 
@@ -94,6 +127,7 @@ export class DirectorComponent implements OnInit, OnDestroy {
     this.loadVenteMoisData();
     this.loadVenteAnneeData();
     this.loadTotalVente();
+    this.loadUserObj();
   }
 
 

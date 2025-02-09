@@ -1,5 +1,5 @@
 export * from './bilanDto';
-export * from './person';
-export * from './user';
+export * from './userDTO';
+export * from './userLoginResponseDTO';
 export * from './venteDto';
 export * from './ventesParJourDto';

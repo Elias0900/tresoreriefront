@@ -11,7 +11,6 @@
 
 export interface BilanDto { 
     id?: number;
-    objectif?: number;
     realise?: number;
     pourcentageRealise?: number;
     pourcentageFram?: number;

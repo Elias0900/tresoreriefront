@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { User, AuthControllerService } from '../../back';
+import {  AuthControllerService, UserLoginResponseDTO } from '../../back';
 import { Router } from '@angular/router';
 
 @Component({
@@ -33,7 +33,7 @@ export class LoginComponent {
     };
   
     this.authService.login(request).pipe().subscribe({
-      next: (response: User) => {
+      next: (response: UserLoginResponseDTO) => {
         console.log('Connexion réussie', response);
   
         // Assurer que la réponse est au format JSON
@@ -45,7 +45,10 @@ export class LoginComponent {
             nom: response.nom,
             prenom: response.prenom,
             email: response.email,
-            token: response.token
+            token: response.token,
+            objectif: response.objectif,
+            agenceId: response.agenceId
+   
           };
           
           // Stocker l'objet utilisateur dans localStorage
@@ -54,7 +57,10 @@ export class LoginComponent {
           localStorage.setItem('user_id', response.id!.toString());
           localStorage.setItem('user_role', response.role!);
           localStorage.setItem('user_token', response.token!);
+          localStorage.setItem('user_objectif', response.objectif!.toString());
+          localStorage.setItem('user_agenceId', response.agenceId!.toString());
         
+
        // Rediriger vers la page correspondante en fonction du rôle de l'utilisateur
        const role = response.role;
 
