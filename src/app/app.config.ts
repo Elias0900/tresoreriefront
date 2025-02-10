@@ -8,6 +8,7 @@ import { DirectorComponent } from '../components/director/director.component';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { RoleGuard } from '../guard/roleGuard';
+import { CalculPrimeComponent } from '../components/calcul-prime/calcul-prime.component';
 
 
 const routes: Routes = [
@@ -31,7 +32,11 @@ const routes: Routes = [
     path: 'directeur',
     component: DirectorComponent,
     title: 'Dashboard Directeur',
-    
+  },
+  {
+    path: 'prime',
+    component: CalculPrimeComponent,
+    title: 'Prime'
   }
 ]
 

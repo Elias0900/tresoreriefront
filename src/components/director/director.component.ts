@@ -3,7 +3,7 @@ import { ButtonModule } from 'primeng/button';
 import { ChartParJourComponent } from "../chart/chart-par-jour/chart-par-jour.component";
 import { ChartParMoisComponent } from "../chart/chart-par-mois/chart-par-mois.component";
 import { Subscription } from 'rxjs';
-import { AgenceVoyagecontrollerService, BilanControllerService, VenteControllerService } from '../../back';
+import {  AgenceVoyageControllerService , BilanControllerService, VenteControllerService } from '../../back';
 import { ListAllVenteComponent } from "../list-all-vente/list-all-vente.component";
 import { CommonModule } from '@angular/common';
 import { ProgressBar } from 'primeng/progressbar';
@@ -60,7 +60,7 @@ export class DirectorComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   readonly venteService = inject(VenteControllerService);
   readonly bilanService = inject(BilanControllerService);
-  readonly agenceService = inject(AgenceVoyagecontrollerService);
+  readonly agenceService = inject(AgenceVoyageControllerService);
 
   constructor() {}
   loadUserObj() {
