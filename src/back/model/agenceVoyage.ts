@@ -7,13 +7,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { User } from './user';
 
 
 export interface AgenceVoyage { 
     id?: number;
     nom?: string;
     objectif?: number;
-    users?: Array<User>;
 }
 

@@ -5,10 +5,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from '@angular/router';
 import { PercentageColorDirective } from '../../directive/objectif.directive';
 import { User } from '../../back/model/user';
+import { TopbarComponent } from "../topbar/topbar.component";
 
 @Component({
   selector: 'app-employe',
-  imports: [NgIf, NgFor, ReactiveFormsModule, PercentageColorDirective],
+  imports: [NgIf, NgFor, ReactiveFormsModule, PercentageColorDirective, TopbarComponent],
   templateUrl: './employe.component.html',
   styleUrls: ['./employe.component.css']
 })

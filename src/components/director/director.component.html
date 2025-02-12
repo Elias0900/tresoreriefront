@@ -70,15 +70,27 @@
                 </div>
               </div>
             </div>
-            <button 
-            type="button" 
-            class="btn btn-primary btn-sm-custom" 
-            data-bs-toggle="modal" 
-            data-bs-target="#exampleModal" 
-            pButton 
-            label="Définir l'objectif du mois" 
-            icon="pi pi-cog">
-          </button>
+            <div class="d-flex align-items-center gap-2">
+              <input 
+                type="number" 
+                class="form-control form-control-sm w-50" 
+                [(ngModel)]="objectif" 
+                placeholder="Définissez votre objectif"
+                min="0"
+              />
+              <button 
+                type="button" 
+                class="btn btn-primary btn-sm d-flex align-items-center gap-1 px-3"
+                (click)="updateObjectif(objectif)"
+                pTooltip="Mettre à jour l'objectif"
+              >
+                <i class="pi pi-save"></i>
+                <span>Enregistrer</span>
+              </button>
+            </div>
+            
+
+            
           
             
           </div>

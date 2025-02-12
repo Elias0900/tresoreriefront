@@ -1234,62 +1234,22 @@ export class VenteControllerService {
 
     /**
      * @param agenceId 
-     * @param userId 
-     * @param nomUser 
-     * @param prenomUser 
-     * @param numeroDossier 
-     * @param dateDepart 
-     * @param dateValidation 
-     * @param assurance 
-     * @param sortBy 
-     * @param sortDirection 
+     * @param recherche 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public searchVentesByAgence(agenceId: number, userId?: number, nomUser?: string, prenomUser?: string, numeroDossier?: string, dateDepart?: string, dateValidation?: string, assurance?: boolean, sortBy?: string, sortDirection?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<Array<Vente>>;
-    public searchVentesByAgence(agenceId: number, userId?: number, nomUser?: string, prenomUser?: string, numeroDossier?: string, dateDepart?: string, dateValidation?: string, assurance?: boolean, sortBy?: string, sortDirection?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<Vente>>>;
-    public searchVentesByAgence(agenceId: number, userId?: number, nomUser?: string, prenomUser?: string, numeroDossier?: string, dateDepart?: string, dateValidation?: string, assurance?: boolean, sortBy?: string, sortDirection?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<Vente>>>;
-    public searchVentesByAgence(agenceId: number, userId?: number, nomUser?: string, prenomUser?: string, numeroDossier?: string, dateDepart?: string, dateValidation?: string, assurance?: boolean, sortBy?: string, sortDirection?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: '*/*', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public searchVentesByAgence(agenceId: number, recherche?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<Array<VenteDto>>;
+    public searchVentesByAgence(agenceId: number, recherche?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<Array<VenteDto>>>;
+    public searchVentesByAgence(agenceId: number, recherche?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<Array<VenteDto>>>;
+    public searchVentesByAgence(agenceId: number, recherche?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
         if (agenceId === null || agenceId === undefined) {
             throw new Error('Required parameter agenceId was null or undefined when calling searchVentesByAgence.');
         }
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
-        if (userId !== undefined && userId !== null) {
+        if (recherche !== undefined && recherche !== null) {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>userId, 'userId');
-        }
-        if (nomUser !== undefined && nomUser !== null) {
-          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>nomUser, 'nomUser');
-        }
-        if (prenomUser !== undefined && prenomUser !== null) {
-          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>prenomUser, 'prenomUser');
-        }
-        if (numeroDossier !== undefined && numeroDossier !== null) {
-          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>numeroDossier, 'numeroDossier');
-        }
-        if (dateDepart !== undefined && dateDepart !== null) {
-          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>dateDepart, 'dateDepart');
-        }
-        if (dateValidation !== undefined && dateValidation !== null) {
-          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>dateValidation, 'dateValidation');
-        }
-        if (assurance !== undefined && assurance !== null) {
-          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>assurance, 'assurance');
-        }
-        if (sortBy !== undefined && sortBy !== null) {
-          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>sortBy, 'sortBy');
-        }
-        if (sortDirection !== undefined && sortDirection !== null) {
-          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
-            <any>sortDirection, 'sortDirection');
+            <any>recherche, 'recherche');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -1298,7 +1258,7 @@ export class VenteControllerService {
         if (localVarHttpHeaderAcceptSelected === undefined) {
             // to determine the Accept header
             const httpHeaderAccepts: string[] = [
-                '*/*'
+                'application/json'
             ];
             localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         }
@@ -1329,7 +1289,7 @@ export class VenteControllerService {
         }
 
         let localVarPath = `/api/ventes/agence/${this.configuration.encodeParam({name: "agenceId", value: agenceId, in: "path", style: "simple", explode: false, dataType: "number", dataFormat: "int64"})}/search`;
-        return this.httpClient.request<Array<Vente>>('get', `${this.configuration.basePath}${localVarPath}`,
+        return this.httpClient.request<Array<VenteDto>>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
                 params: localVarQueryParameters,

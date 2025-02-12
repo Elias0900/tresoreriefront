@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { ChartParJourComponent } from "../chart/chart-par-jour/chart-par-jour.component";
 import { ChartParMoisComponent } from "../chart/chart-par-mois/chart-par-mois.component";
@@ -62,7 +62,8 @@ export class DirectorComponent implements OnInit, OnDestroy {
   readonly bilanService = inject(BilanControllerService);
   readonly agenceService = inject(AgenceVoyageControllerService);
 
-  constructor() {}
+  constructor(private cdr: ChangeDetectorRef) {}
+
   loadUserObj() {
     const objectifStored = localStorage.getItem('user_objectif');
     const agenceIdStored = localStorage.getItem('user_agenceId');
@@ -82,45 +83,52 @@ export class DirectorComponent implements OnInit, OnDestroy {
 
 
 
-  updateObjectif(newObjectif: number) {
-    console.log("Nouvel objectif reçu :", newObjectif);
-    this.objectif = newObjectif;
-  
-    // Envoi de la mise à jour avec le bon paramètre
-    this.agenceService.updateObjectif(this.agenceId!, { objectif: newObjectif }).subscribe({
-      next: (updatedAgence: AgenceVoyage) => {
-        console.log("Objectif mis à jour avec succès:", updatedAgence.objectif);
-        this.objectif = updatedAgence.objectif!;
-        this.calculateProgression(); // Mise à jour correcte après la réponse du serveur
-      },
-      error: (err) => {
-        console.error("Erreur lors de la mise à jour de l'objectif :", err);
-      }
-    });
+updateObjectif(newObjectif: number) {
+  if (newObjectif == null || newObjectif <= 0) {
+    console.warn("Valeur d'objectif invalide :", newObjectif);
+    return;
   }
-  
+
+  console.log("Nouvel objectif reçu :", newObjectif);
+  this.objectif = newObjectif;
+  localStorage.setItem('user_objectif', JSON.stringify(newObjectif)); // MAJ stockage local
+
+  if (!this.agenceId) {
+    console.error("Impossible de mettre à jour l'objectif : agenceId est indéfini.");
+    return;
+  }
+
+  this.agenceService.updateObjectif(this.agenceId, { objectif: newObjectif }).subscribe({
+    next: (updatedAgence: AgenceVoyage) => {
+      console.log("Objectif mis à jour avec succès:", updatedAgence.objectif);
+      if (updatedAgence.objectif != null) {
+        this.objectif = updatedAgence.objectif;
+        localStorage.setItem('user_objectif', JSON.stringify(updatedAgence.objectif)); // MAJ locale
+        this.calculateProgression(); // MAJ immédiate de la barre de progression
+      } else {
+        console.warn("L'objectif mis à jour est null.");
+      }
+      window.location.reload();
+    },
+    error: (err) => {
+      console.error("Erreur lors de la mise à jour de l'objectif :", err);
+    }
+  });
+}
 
   
-
-
-  // Méthode pour calculer la progression de la barre
   calculateProgression(): void {
     if (this.venteTotal > 0 && this.objectif > 0) {
       console.log("Calcul progression avec :", this.venteTotal, "et objectif :", this.objectif);
       
-      // Calcul de la progression en pourcentage
-      this.progression = (this.venteTotal / this.objectif) * 100;
-  
-      // Limiter la progression à un maximum de 100
-      if (this.progression > 100) {
-        this.progression = 100;
-      }
+      this.progression = Math.min((this.venteTotal / this.objectif) * 100, 100);
     } else {
-      console.error('Valeur incorrecte pour venteTotal ou objectif', this.venteTotal, this.objectif);
+      console.warn("Valeurs incorrectes pour venteTotal ou objectif :", this.venteTotal, this.objectif);
       this.progression = 0;
     }
-    console.log('Progression après calcul:', this.progression);
+    console.log("Progression après calcul:", this.progression);
   }
+  
   
 
   ngOnInit() {
@@ -129,6 +137,7 @@ export class DirectorComponent implements OnInit, OnDestroy {
     this.loadVenteAnneeData();
     this.loadTotalVente();
     this.loadUserObj();
+ 
   }
 
 

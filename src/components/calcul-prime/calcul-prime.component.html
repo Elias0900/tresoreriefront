@@ -1,24 +1,38 @@
 <div class="dashboard container py-4">
+    <h1 class="display-4 text-center">Synthèse des Primes à payer</h1>
     <div class="row card rounded-3 border-opacity-50 border">
         <table *ngIf="listUser.length > 0; else emptyTable" class="table table-outline-success table-striped table-hover">
             <thead>
                 <tr>
                     <th>Nom</th>
                     <th>Prénom</th>
+                    <th>Rôle</th>
                     <th>Ventes Réalisés</th>
                     <th>Pourcentage Objectif</th>
-                    <th>Primes</th>
+                    <th>Pourcentage Assurance</th>
+                    <th>Pourcentage FRAM</th>
+                    <th>Primes à Payer</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let user of listUser">
                     <td>{{ user.nom }}</td>
                     <td>{{ user.prenom }}</td>
-                    <td>{{ user.id !== undefined ? bilanUsers[user.id].realise ?? 'En cours...' : 'N/A' }}</td>
+                    <td>{{user.role}}</td>
+                    <td>{{ user.id !== undefined ? bilanUsers[user.id].realise ?? 'En cours...' : 'N/A' }} €</td>
                     <td>
-                        {{ user.id !== undefined && bilanUsers[user.id] ? bilanUsers[user.id].pourcentageRealise ?? 'En cours...' : 'N/A' }}
+                        {{ user.id !== undefined && bilanUsers[user.id] ? (bilanUsers[user.id].pourcentageRealise! * 100 | number:'1.0-0') + ' %' : 'N/A' }}
                     </td>
-                    <td>{{ user.id !== undefined ? bilanUsers[user.id].totalPrimesBrutes ?? 'En cours...' : 'N/A' }}</td>
+                    <td> 
+                        {{ user.id !== undefined && bilanUsers[user.id] ? (bilanUsers[user.id].pourcentageAssurance! * 100 | number:'1.0-0') + ' %' : 'N/A' }}
+                    </td>
+                    <td>
+                    {{ user.id !== undefined && bilanUsers[user.id] ? (bilanUsers[user.id].pourcentageFram! * 100 | number:'1.0-0') + ' %' : 'N/A' }}
+                    </td>
+                    <td>
+                        {{ user.id !== undefined ? (bilanUsers[user.id].totalPrimesBrutes | number:'1.2-2') ?? 'En cours...' : 'N/A' }} €
+                    </td>
+                    
                 </tr>
             </tbody>
         </table>
