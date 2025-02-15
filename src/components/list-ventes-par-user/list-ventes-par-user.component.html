@@ -1,1 +1,31 @@
-<p>list-ventes-par-user works!</p>
+<div class="dashboard container py-4">
+    <h1 class="display-4 text-center">Liste des ventes du mois</h1>
+    <div class="sales-list">
+        <table *ngIf="this.listVente" class="sales-table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Numéro de dossier</th>
+                    <th>Date de validation</th>
+                    <th>Montant total</th>
+                    <th>Montant Assurance</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let vente of this.listVente">
+                    <td>{{ vente.nom }}</td>
+                    <td>{{ vente.prenom }}</td>
+                    <td>{{ vente.numeroDossier }}</td>
+                    <td>{{ vente.dateValidation }}</td>
+                    <td>{{ vente.venteTotal }}</td>
+                    <td>{{ vente.montantAssurance}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bouton Retour centré -->
+<div class="d-flex justify-content-center mt-4">
+    <button class="btn btn-secondary" (click)="goBack()">Retour</button>
+  </div>

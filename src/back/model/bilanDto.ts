@@ -19,6 +19,8 @@ export interface BilanDto {
     autresTo?: number;
     assurances?: number;
     totalPrimesBrutes?: number;
+    vendeurNom?: string;
+    vendeurPrenom?: string;
     userId?: number;
 }
 

@@ -8,6 +8,7 @@
  * Do not edit the class manually.
  */
 import { User } from './user';
+import { VenteDtoTransactionDate } from './venteDtoTransactionDate';
 
 
 export interface Vente { 
@@ -25,7 +26,7 @@ export interface Vente {
     fraisAgence?: number;
     totalSansAssurance?: number;
     assurance?: boolean;
-    transactionDate?: string;
+    transactionDate?: VenteDtoTransactionDate;
     user?: User;
 }
 

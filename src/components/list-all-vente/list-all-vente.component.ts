@@ -1,12 +1,16 @@
 import { Component, ElementRef, inject, ViewChild, OnInit } from '@angular/core';
-import { VenteControllerService, VenteDto } from '../../back';
-import { CommonModule } from '@angular/common';
+import { AuthControllerService, UserControllerService, UserDTO, VenteControllerService, VenteDto } from '../../back';
+import { CommonModule, Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
+import { Router } from '@angular/router';
+import { forkJoin, of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-list-all-vente',
@@ -25,11 +29,15 @@ import { ToastModule } from 'primeng/toast';
 })
 export class ListAllVenteComponent implements OnInit {
   readonly venteService = inject(VenteControllerService);
+  readonly userService = inject(UserControllerService);
+  readonly router = inject(Router);
+  readonly location = inject(Location);
   ventes: VenteDto[] = []; // Liste des ventes
   searchQuery: string = ''; // Recherche utilisateur
   objectif: number = 0; // Objectif stocké
   agenceId: number | undefined; // ID de l'agence
   isSearching: boolean = false; // Gestion affichage "Aucun résultat"
+  userDto!: UserDTO
 
   @ViewChild('filter') filter!: ElementRef;
 
@@ -60,6 +68,7 @@ export class ListAllVenteComponent implements OnInit {
       next: (data) => {
         this.ventes = data;
         console.log('Ventes récupérées:', this.ventes);
+      
       },
       error: (err) => {
         console.error('Erreur lors de la récupération des ventes', err);
@@ -67,22 +76,31 @@ export class ListAllVenteComponent implements OnInit {
     });
   }
 
+
+
+  
+  goToPrime() {
+    this.router.navigate(['/prime']);
+  }
+
+  
+
   // Recherche les ventes par agence
   onSearch(): void {
     if (!this.agenceId) {
       console.warn('Impossible de rechercher : agenceId non défini.');
       return;
     }
-  
+
     this.isSearching = true;
-  
+
     // Si la recherche est vide, afficher toutes les ventes
     if (!this.searchQuery.trim()) {
       this.getVentes(); // Recharge toutes les ventes
       this.isSearching = false;
       return;
     }
-  
+
     // Effectuer la recherche
     this.venteService.searchVentesByAgence(this.agenceId, this.searchQuery).subscribe({
       next: (data) => {
@@ -96,6 +114,6 @@ export class ListAllVenteComponent implements OnInit {
       }
     });
   }
-  
-  
+
+
 }

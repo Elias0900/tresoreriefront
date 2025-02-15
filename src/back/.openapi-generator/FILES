@@ -5,6 +5,7 @@ api/agenceVoyageController.service.ts
 api/api.ts
 api/authController.service.ts
 api/bilanController.service.ts
+api/userController.service.ts
 api/venteController.service.ts
 configuration.ts
 encoder.ts
@@ -18,6 +19,7 @@ model/userDTO.ts
 model/userLoginResponseDTO.ts
 model/vente.ts
 model/venteDto.ts
+model/venteDtoTransactionDate.ts
 model/ventesParJourDto.ts
 param.ts
 variables.ts

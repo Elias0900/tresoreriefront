@@ -9,6 +9,7 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 import { RoleGuard } from '../guard/roleGuard';
 import { CalculPrimeComponent } from '../components/calcul-prime/calcul-prime.component';
+import { ListVentesParUserComponent } from '../components/list-ventes-par-user/list-ventes-par-user.component';
 
 
 const routes: Routes = [
@@ -37,6 +38,11 @@ const routes: Routes = [
     path: 'prime',
     component: CalculPrimeComponent,
     title: 'Prime'
+  },
+  {
+    path: 'ventes-user/:id',
+    component: ListVentesParUserComponent,
+    title: 'detail-ventes'
   }
 ]
 

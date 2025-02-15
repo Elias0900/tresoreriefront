@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { PercentageColorDirective } from '../../directive/objectif.directive';
 import { User } from '../../back/model/user';
 import { TopbarComponent } from "../topbar/topbar.component";
+import { PipeDatePipe } from '../pipe-date.pipe';
 
 @Component({
   selector: 'app-employe',
@@ -39,6 +40,7 @@ export class EmployeComponent implements OnInit {
     { id: 'montantAssurance', label: "Montant de l'assurance", type: 'number', model: 'montantAssurance' },
     { id: 'fraisAgence', label: "Frais d'agence", type: 'number', model: 'fraisAgence', validators: [Validators.required, Validators.min(0)] },
     { id: 'totalSansAssurance', label: 'Total sans assurance', type: 'number', model: 'totalSansAssurance', validators: [Validators.required, Validators.min(0)] },
+    { id: 'transactionDate', label: 'Mois de la transaction', type: 'month', model: 'transactionDate', validators: [Validators.required] },
     { id: 'userId', type: 'number', model: 'userId' }
   ];
   objectif: number = 0;    // Objectif par défaut
@@ -60,6 +62,8 @@ export class EmployeComponent implements OnInit {
       next: (response) => {
         console.log('Vente enregistrée avec succès', response);
         this.salesForm.reset();
+        this.getBilan();
+        this.getVentes();
       },
       error: (err) => {
         console.error('Erreur lors de l’ajout de la vente', err);
@@ -72,8 +76,10 @@ export class EmployeComponent implements OnInit {
       console.error('Utilisateur non connecté ou identifiant manquant');
       return;
     }
+    const currentDate = new Date();
+    const formattedDate = new PipeDatePipe().transform(currentDate); // Utilisation du pipe
 
-    this.bilanService.getBilanByUserId(this.user.id).subscribe({
+    this.bilanService.getBilanByUserIdAndMois(this.user.id, formattedDate).subscribe({
       next: (data) => {
         this.bilan = data;
         console.log('Bilan récupéré :', this.bilan);
@@ -128,6 +134,7 @@ export class EmployeComponent implements OnInit {
     if (userId) {
       this.salesForm.patchValue({ userId: userId });
     }
+    this.salesForm.patchValue({ transactionDate: new Date().toISOString().slice(0, 7) });
 
     this.salesForm.get('venteTotal')?.valueChanges.subscribe(venteTotal => {
       const montantAssurance = this.salesForm.get('montantAssurance')?.value || 0;

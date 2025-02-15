@@ -7,6 +7,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { VenteDtoTransactionDate } from './venteDtoTransactionDate';
 
 
 export interface VenteDto { 
@@ -23,6 +24,9 @@ export interface VenteDto {
     montantAssurance?: number;
     fraisAgence?: number;
     totalSansAssurance?: number;
+    transactionDate?: VenteDtoTransactionDate;
     userId?: number;
+    vendeurNom?: string;
+    vendeurPrenom?: string;
 }
 
