@@ -1,0 +1,25 @@
+<div class="login-container">
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <label for="prenom">Prénom :</label>
+        <input id="prenom" formControlName="prenom" required>
+        
+        <label for="nom">Nom :</label>
+        <input id="nom" formControlName="nom" required>
+        
+        <label for="email">Email :</label>
+        <input id="email" type="email" formControlName="email" required>
+        
+        <label for="password">Mot de passe :</label>
+        <input id="password" type="password" formControlName="password" required>
+        
+        <input type="hidden" formControlName="role">
+        
+        <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+    
+        <div class="button-group">
+            <button type="submit" [disabled]="registerForm.invalid">S'inscrire</button>
+            <button type="button" class="secondary" (click)="navigateToLogin()">Connexion</button>
+        </div>
+      </form>
+    </div>
