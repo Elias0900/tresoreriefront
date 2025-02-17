@@ -1,0 +1,33 @@
+name: Generate OpenAPI Client
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  generate_openapi:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install OpenAPI Generator
+        run: npm install -g openapi-generator-cli
+
+      - name: Generate API client
+        run: openapi-generator-cli generate -i https://promovacbackend-production.up.railway.app/v3/api-docs -g typescript-angular -o src/back
+
+      - name: Commit generated files
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "GitHub Actions Bot"
+          git add src/back
+          git commit -m "Update OpenAPI client" || echo "No changes to commit"
+          git push
