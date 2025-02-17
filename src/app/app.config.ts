@@ -5,7 +5,12 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { EmployeComponent } from '../components/employe/employe.component';
 import { authInterceptor } from '../interceptor/auth.interceptor';
 import { DirectorComponent } from '../components/director/director.component';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
 import { RoleGuard } from '../guard/roleGuard';
+import { CalculPrimeComponent } from '../components/calcul-prime/calcul-prime.component';
+import { ListVentesParUserComponent } from '../components/list-ventes-par-user/list-ventes-par-user.component';
+import { RegisterComponent } from '../components/register/register.component';
 
 
 const routes: Routes = [
@@ -20,6 +25,11 @@ const routes: Routes = [
     title: 'Page de connexion',
   }, 
   {
+    path: 'register',
+    component: RegisterComponent,
+    title: 'Inscription',
+  }, 
+  {
     path: 'employe',
     component: EmployeComponent,
     title: 'Dashboard Employe',
@@ -29,11 +39,23 @@ const routes: Routes = [
     path: 'directeur',
     component: DirectorComponent,
     title: 'Dashboard Directeur',
-    
+  },
+  {
+    path: 'prime',
+    component: CalculPrimeComponent,
+    title: 'Prime'
+  },
+  {
+    path: 'ventes-user/:id',
+    component: ListVentesParUserComponent,
+    title: 'detail-ventes'
   }
 ]
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),  provideRouter(routes),
-    provideHttpClient(withInterceptors([authInterceptor])),]
+    provideHttpClient(withInterceptors([authInterceptor])),  providePrimeNG({
+      theme: {
+          preset: Aura
+      }})]
 };

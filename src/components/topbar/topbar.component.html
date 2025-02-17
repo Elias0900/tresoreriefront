@@ -1,0 +1,15 @@
+<div class="top-bar">
+    <div class="left">
+      <button class="hamburger" (click)="toggleSidenav()">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <span class="username">{{ this.user?.nom }} {{ this.user?.prenom }}</span>
+    </div>
+    <div class="right">
+      <button class="logout btn btn-outline-danger" (click)="logout()">Déconnexion</button>
+    </div>
+  </div>
+  <!-- <app-sidenav *ngIf="sidenavOpen"></app-sidenav> -->
+  

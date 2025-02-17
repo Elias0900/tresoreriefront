@@ -1,0 +1,80 @@
+<app-topbar></app-topbar>
+<div class="dashboard container py-4">
+    <h1 class="display-4 text-center">Synthèse des Primes à payer</h1>
+
+    <!-- Filtres : Sélection du vendeur et choix du mois -->
+    <div class="row mb-3 d-flex justify-content-center">
+        <div class="col-md-4">
+            <label for="vendeurSelect" class="form-label">Choisir un vendeur :</label>
+            <select id="vendeurSelect" class="form-select" [(ngModel)]="selectedUserId"
+                (ngModelChange)="loadBilansByUser()">
+                <option [value]="null">Tous les vendeurs</option>
+                <option *ngFor="let user of listUser" [value]="user.id">
+                    {{ user.prenom }} {{ user.nom }}
+                </option>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="monthPicker" class="form-label">Sélectionner le mois :</label>
+            <input id="monthPicker" type="month" class="form-control" [(ngModel)]="selectedYearMonth"
+                (ngModelChange)="loadBilansByUser()">
+        </div>
+    </div>
+
+    <div class="row card rounded-3 border-opacity-50 border">
+        <table *ngIf="listUser.length > 0; else emptyTable"
+            class="table table-outline-success table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Vendeur</th>
+                    <th>Rôle</th>
+                    <th>Ventes Réalisées</th>
+                    <th>Pourcentage Objectif</th>
+                    <th>Pourcentage Assurance</th>
+                    <th>Pourcentage FRAM</th>
+                    <th>Primes Brut à Payer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of listUser" [hidden]="selectedUserId && user.id !== selectedUserId">
+                    <td>
+                        <a [routerLink]="['/ventes-user', user.id]" class="text-decoration-none">
+                            {{ user.prenom }} {{ user.nom }}
+                        </a>
+                    </td>
+                    <td>{{ user.role }}</td>
+                    <td>{{ user.id !== undefined ? bilanUsers[user.id]?.realise ?? 'En cours...' : 'N/A' }} €</td>
+                    <td>
+                        {{ user.id !== undefined && bilanUsers[user.id] ? (bilanUsers[user.id].pourcentageRealise! * 100
+                        | number:'1.0-0') + ' %' : 'N/A' }}
+                    </td>
+                    <td>
+                        {{ user.id !== undefined && bilanUsers[user.id] ? (bilanUsers[user.id].pourcentageAssurance! *
+                        100 | number:'1.0-0') + ' %' : 'N/A' }}
+                    </td>
+                    <td>
+                        {{ user.id !== undefined && bilanUsers[user.id] ? (bilanUsers[user.id].pourcentageFram! * 100 |
+                        number:'1.0-0') + ' %' : 'N/A' }}
+                    </td>
+                    <td>
+                        {{ user.id !== undefined && bilanUsers[user.id]?.totalPrimesBrutes !== undefined 
+                            ? bilanUsers[user.id]?.totalPrimesBrutes?.toFixed(2) + ' €' 
+                            : 'En cours...' 
+                        }}
+                    </td>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Message si aucun utilisateur -->
+<ng-template #emptyTable>
+    <p class="text-center">Aucun utilisateur trouvé.</p>
+</ng-template>
+
+<!-- Bouton Retour centré -->
+<div class="d-flex justify-content-center mt-4">
+    <button class="btn btn-secondary" (click)="goBack()">Retour</button>
+</div>

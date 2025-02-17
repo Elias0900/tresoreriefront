@@ -1,0 +1,48 @@
+<nav class="navbar bg-body-tertiary">
+  <div class="container-fluid">
+    <form class="d-flex" (submit)="onSearch(); $event.preventDefault()">
+      <input class="form-control me-2" type="search" placeholder="Rechercher par nom" [(ngModel)]="searchQuery" name="search">
+      <button class="btn btn-outline-success" type="submit">Rechercher</button>
+    </form>
+   
+      <button class="btn btn-outline-primary" type="button" (click)="goToPrime()">Voir les Primes</button>
+
+  </div>
+</nav>
+
+<!-- Afficher un message si aucune vente n'est trouvée -->
+<div *ngIf="ventes.length === 0 && !isSearching">
+  <p>Aucune vente trouvée pour "{{ searchQuery }}".</p>
+</div>
+
+<!-- Afficher les résultats si des ventes sont présentes -->
+<table *ngIf="ventes.length > 0" class="table table-outline-success table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th>Numéro de dossier</th>
+      <th>Date de validation</th>
+      <th>Montant total</th>
+      <th>Montant Assurance</th>
+      <th>Vendeur</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let vente of ventes">
+      <td>{{ vente.nom }}</td>
+      <td>{{ vente.prenom }}</td>
+      <td>{{ vente.numeroDossier }}</td>
+      <td>{{ vente.dateValidation }}</td>
+      <td>{{ vente.venteTotal }}</td>
+      <td>{{ vente.montantAssurance }}</td>
+      <td>{{ vente.vendeurPrenom}} {{vente.vendeurNom}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Afficher un indicateur de recherche en cours -->
+<div *ngIf="isSearching">
+  <p>Chargement des résultats...</p>
+</div>
+
