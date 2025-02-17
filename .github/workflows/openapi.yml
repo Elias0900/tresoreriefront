@@ -19,7 +19,7 @@ jobs:
           node-version: 18
 
       - name: Install OpenAPI Generator
-        run: npm install -g openapi-generator-cli
+        run: npm install -g @openapitools/openapi-generator-cli
 
       - name: Generate API client
         run: openapi-generator-cli generate -i https://promovacbackend-production.up.railway.app/v3/api-docs -g typescript-angular -o src/back
