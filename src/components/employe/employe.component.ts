@@ -1,7 +1,7 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthControllerService, BilanControllerService, BilanDto, VenteControllerService, VenteDto } from '../../back';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PercentageColorDirective } from '../../directive/objectif.directive';
 import { User } from '../../back/model/user';
@@ -10,7 +10,7 @@ import { PipeDatePipe } from '../pipe-date.pipe';
 
 @Component({
   selector: 'app-employe',
-  imports: [NgIf, NgFor, ReactiveFormsModule, PercentageColorDirective, TopbarComponent],
+  imports: [NgIf, NgFor, ReactiveFormsModule, PercentageColorDirective, TopbarComponent, FormsModule],
   templateUrl: './employe.component.html',
   styleUrls: ['./employe.component.css']
 })
@@ -22,6 +22,8 @@ export class EmployeComponent implements OnInit {
   user: User | null = null;
   ventes: VenteDto[] = [];
   bilan: BilanDto | null = null;
+  searchQuery: string = '';
+  isSearching: boolean = false; // Gestion affichage "Aucun résultat"
   salesForm: FormGroup;
   fields = [
     { id: 'nom', label: 'Nom', type: 'text', model: 'nom', validators: [Validators.required] },
@@ -183,8 +185,35 @@ export class EmployeComponent implements OnInit {
     return value ? Math.floor(value * 100) : 0; // Multiplie par 100 et arrondi à l'entier inférieur
   }
 
-  getMontantSansAssurance(){
-    
+ // Recherche les ventes par user
+ onSearch(): void {
+  if (!this.user?.id) {
+    console.warn('Impossible de rechercher : agenceId non défini.');
+    return;
   }
+
+  this.isSearching = true;
+
+  // Si la recherche est vide, afficher toutes les ventes
+  if (!this.searchQuery.trim()) {
+    this.getVentes(); // Recharge toutes les ventes
+    this.isSearching = false;
+    return;
+  }
+
+  // Effectuer la recherche
+  this.venteService.searchVentesByAgence(this.user.id, this.searchQuery).subscribe({
+    next: (data) => {
+      this.ventes = data;
+      console.log('Résultats de la recherche:', this.ventes);  // Vérification dans la console
+      this.isSearching = false;
+    },
+    error: (err) => {
+      console.error('Erreur lors de la recherche :', err);
+      this.isSearching = false;
+    }
+  });
+}
+
   
 }

@@ -5,10 +5,11 @@ import { User } from '../../back/model/user';
 import { AgenceVoyageControllerService, BilanControllerService, BilanDto } from '../../back';
 import { RouterLink } from '@angular/router';
 import { PipeDatePipe } from '../pipe-date.pipe';
+import { TopbarComponent } from "../topbar/topbar.component";
 
 @Component({
   selector: 'app-calcul-prime',
-  imports: [FormsModule, CommonModule, RouterLink],
+  imports: [FormsModule, CommonModule, RouterLink, TopbarComponent],
   templateUrl: './calcul-prime.component.html',
 })
 export class CalculPrimeComponent {

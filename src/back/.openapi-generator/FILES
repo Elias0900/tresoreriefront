@@ -17,7 +17,6 @@ model/models.ts
 model/user.ts
 model/userDTO.ts
 model/userLoginResponseDTO.ts
-model/vente.ts
 model/venteDto.ts
 model/venteDtoTransactionDate.ts
 model/ventesParJourDto.ts

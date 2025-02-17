@@ -46,7 +46,7 @@
           <div class="form-group">
             <label for="venteTotal">Montant total</label>
             <input type="number" id="venteTotal" formControlName="venteTotal" required />
-          </div>        
+          </div>
 
           <div class="form-group">
             <label for="fraisAgence">Frais d'agence</label>
@@ -89,50 +89,58 @@
               <tr>
                 <td>{{ this.objectif }}</td>
                 <td>{{ this.bilan.realise }}</td>
-                <td [appPercentageColor]="this.bilan.pourcentageRealise">{{ formatPercentage(this.bilan.pourcentageRealise) }}</td>
+                <td [appPercentageColor]="this.bilan.pourcentageRealise">{{
+                  formatPercentage(this.bilan.pourcentageRealise) }}</td>
                 <td>{{ formatPercentage(this.bilan.pourcentageFram) }}</td>
                 <td>{{ formatPercentage(this.bilan.pourcentageAssurance) }}</td>
-                
+
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-        <div class="prime">
-          <h5 class="display-6">Primes brutes</h5>
-          <table class="summary-table">
-            <thead>
-              <tr>
-                <th>Type de prime</th>
-                <th>Montant</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>FRAM - Croisières</td>
-                <td>{{ this.bilan.framCroisieres }}</td>
-              </tr>
-              <tr>
-                <td>Autres TO</td>
-                <td>{{ this.bilan.autresTo }}</td>
-              </tr>
-              <tr>
-                <td>Assurances</td>
-                <td>{{ this.bilan.assurances }}</td>
-              </tr>
-              <tr>
-                <td><strong>Total des primes brutes</strong></td>
-                <td><strong>{{ this.bilan.totalPrimesBrutes?.toFixed(2) }}</strong></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+      <div class="prime">
+        <h5 class="display-6">Primes brutes</h5>
+        <table class="summary-table">
+          <thead>
+            <tr>
+              <th>Type de prime</th>
+              <th>Montant</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>FRAM - Croisières</td>
+              <td>{{ this.bilan.framCroisieres }}</td>
+            </tr>
+            <tr>
+              <td>Autres TO</td>
+              <td>{{ this.bilan.autresTo }}</td>
+            </tr>
+            <tr>
+              <td>Assurances</td>
+              <td>{{ this.bilan.assurances }}</td>
+            </tr>
+            <tr>
+              <td><strong>Total des primes brutes</strong></td>
+              <td><strong>{{ this.bilan.totalPrimesBrutes?.toFixed(2) }}</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
   </div>
 
-  <div  class="sales-list">
+  <div class="sales-list">
     <h3>Liste des ventes</h3>
-    <table *ngIf="this.ventes" class="sales-table">
+    <div class="search-container">
+      <form (submit)="onSearch(); $event.preventDefault()">
+        <input class="form-control" type="search" placeholder="Rechercher par nom" [(ngModel)]="searchQuery"
+          name="search">
+        <button type="submit" class="btn btn-outline-success">Rechercher</button>
+      </form>
+    </div>
+    <table *ngIf="this.ventes" class="sales-table table table-outline-success table-striped table-hover">
       <thead>
         <tr>
           <th>Nom</th>
@@ -153,6 +161,9 @@
           <td>{{ vente.montantAssurance}}</td>
         </tr>
       </tbody>
+
     </table>
   </div>
+
+
 </div>

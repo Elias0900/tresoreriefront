@@ -62,7 +62,7 @@ export class DirectorComponent implements OnInit, OnDestroy {
   readonly bilanService = inject(BilanControllerService);
   readonly agenceService = inject(AgenceVoyageControllerService);
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor() {}
 
   loadUserObj() {
     const objectifStored = localStorage.getItem('user_objectif');
@@ -121,7 +121,7 @@ updateObjectif(newObjectif: number) {
     if (this.venteTotal > 0 && this.objectif > 0) {
       console.log("Calcul progression avec :", this.venteTotal, "et objectif :", this.objectif);
       
-      this.progression = Math.min((this.venteTotal / this.objectif) * 100, 100);
+      this.progression = Math.floor((this.venteTotal / this.objectif) * 100);
     } else {
       console.warn("Valeurs incorrectes pour venteTotal ou objectif :", this.venteTotal, this.objectif);
       this.progression = 0;
