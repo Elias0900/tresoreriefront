@@ -11,6 +11,7 @@ import { RoleGuard } from '../guard/roleGuard';
 import { CalculPrimeComponent } from '../components/calcul-prime/calcul-prime.component';
 import { ListVentesParUserComponent } from '../components/list-ventes-par-user/list-ventes-par-user.component';
 import { RegisterComponent } from '../components/register/register.component';
+import { AjoutVenteDirectorComponent } from '../components/ajout-vente-director/ajout-vente-director.component';
 
 
 const routes: Routes = [
@@ -48,7 +49,12 @@ const routes: Routes = [
   {
     path: 'ventes-user/:id',
     component: ListVentesParUserComponent,
-    title: 'detail-ventes'
+    title:'detail-ventes'
+  },
+  {
+    path: 'ajout-vente/:id',
+    component: AjoutVenteDirectorComponent,
+    title: 'Ajouter une vente'
   }
 ]
 
