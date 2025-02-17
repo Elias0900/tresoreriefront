@@ -1,0 +1,26 @@
+stages:
+  - generate
+  - build
+  - deploy
+
+variables:
+  NODE_ENV: 'production'
+
+before_script:
+  - npm install
+  - npm install -g openapi-generator-cli
+
+generate_openapi:
+  stage: generate
+  script:
+    - openapi-generator-cli generate -i https://promovacbackend-production.up.railway.app/v3/api-docs -g typescript-angular -o src/back
+  only:
+    - main
+
+build:
+  stage: build
+  script:
+    - ng build --prod
+  only:
+    - main
+
