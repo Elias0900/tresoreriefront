@@ -1,0 +1,73 @@
+<div class="page-container">
+    <div class="content">
+        <section class="sales-form-section">
+            <h2>Nouvelle vente</h2>
+            <form class="sales-form" [formGroup]="salesForm" (ngSubmit)="ajouterVente()">
+                <div class="form-fields">
+                    <div class="form-group">
+                        <label for="nom">Nom</label>
+                        <input type="text" id="nom" formControlName="nom" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prenom">Prénom</label>
+                        <input type="text" id="prenom" formControlName="prenom" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="numeroDossier">Numéro de dossier</label>
+                        <input type="text" id="numeroDossier" formControlName="numeroDossier" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pax">Nombre de personnes</label>
+                        <input type="number" id="pax" formControlName="pax" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dateValidation">Date de validation</label>
+                        <input type="date" id="dateValidation" formControlName="dateValidation" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dateDepart">Date de départ</label>
+                        <input type="date" id="dateDepart" formControlName="dateDepart" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tourOperateur">Tour Operateur</label>
+                        <select id="tourOperateur" formControlName="tourOperateur" required>
+                            <option value="FRAM">FRAM</option>
+                            <option value="AUTRE">Autres</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="venteTotal">Montant total</label>
+                        <input type="number" id="venteTotal" formControlName="venteTotal" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fraisAgence">Frais d'agence</label>
+                        <input type="number" id="fraisAgence" formControlName="fraisAgence" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="assurance">Assurance souscrite</label>
+                        <input class="form-check-input" type="checkbox" id="assurance" formControlName="assurance" />
+                    </div>
+                    <div class="form-group" *ngIf="salesForm.get('assurance')?.value">
+                        <label for="montantAssurance">Montant de l'assurance</label>
+                        <input type="number" id="montantAssurance" formControlName="montantAssurance" required />
+                    </div>
+
+                    <div class="form-group" *ngIf="salesForm.get('assurance')?.value">
+                        <label for="totalSansAssurance">Total sans assurance</label>
+                        <input type="number" id="totalSansAssurance" formControlName="totalSansAssurance" required />
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-outline-success add-vente">Ajouter</button>
+            </form>
+
+        </section>
+    </div>
+</div>

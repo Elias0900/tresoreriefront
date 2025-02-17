@@ -1,11 +1,13 @@
 <nav class="navbar bg-body-tertiary">
   <div class="container-fluid">
     <form class="d-flex" (submit)="onSearch(); $event.preventDefault()">
-      <input class="form-control me-2" type="search" placeholder="Rechercher par nom" [(ngModel)]="searchQuery" name="search">
+      <input class="form-control me-2" type="search" placeholder="Rechercher par nom" [(ngModel)]="searchQuery"
+        name="search">
       <button class="btn btn-outline-success" type="submit">Rechercher</button>
     </form>
-   
-      <button class="btn btn-outline-primary" type="button" (click)="goToPrime()">Voir les Primes</button>
+
+    <button class="btn btn-outline-primary" type="button" (click)="goToPrime()">Voir les Primes</button>
+    <button class="btn btn-outline-success" type="button" [routerLink]="['/ajout-vente', userId]">Ajouter une Vente</button>
 
   </div>
 </nav>
@@ -45,4 +47,3 @@
 <div *ngIf="isSearching">
   <p>Chargement des résultats...</p>
 </div>
-

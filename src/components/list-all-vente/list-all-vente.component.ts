@@ -7,7 +7,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { ToastModule } from 'primeng/toast';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { forkJoin, of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
@@ -22,7 +22,8 @@ import { mergeMap } from 'rxjs/operators';
     MultiSelectModule,
     InputTextModule,
     ButtonModule,
-    ToastModule
+    ToastModule,
+    RouterLink
   ],
   templateUrl: './list-all-vente.component.html',
   styleUrl: './list-all-vente.component.scss'
@@ -38,6 +39,7 @@ export class ListAllVenteComponent implements OnInit {
   agenceId: number | undefined; // ID de l'agence
   isSearching: boolean = false; // Gestion affichage "Aucun résultat"
   userDto!: UserDTO
+  userId!: number;
 
   @ViewChild('filter') filter!: ElementRef;
 
@@ -50,11 +52,13 @@ export class ListAllVenteComponent implements OnInit {
   loadUserObj(): void {
     const objectifStored = localStorage.getItem('user_objectif');
     const agenceIdStored = localStorage.getItem('user_agenceId');
+    const userIdStored = localStorage.getItem('user_id')
 
     if (objectifStored && agenceIdStored) {
       try {
         this.objectif = JSON.parse(objectifStored);
         this.agenceId = JSON.parse(agenceIdStored);
+        this.userId = JSON.parse(userIdStored!);
         console.log('Agence ID:', this.agenceId, 'Objectif:', this.objectif);
       } catch (error) {
         console.error('Erreur de parsing du token', error);
@@ -81,6 +85,10 @@ export class ListAllVenteComponent implements OnInit {
   
   goToPrime() {
     this.router.navigate(['/prime']);
+  }
+
+  goToVente() {
+    this.router.navigate(['/ajout-ventes']);
   }
 
   
