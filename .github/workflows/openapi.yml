@@ -33,4 +33,4 @@ jobs:
 
       - name: Push changes
         run: |
-          git push https://x-access-token:${{ secrets.promovc }}@github.com/Elias0900/tresoreriefront.git main
+          git push https://x-access-token:${{ secrets.PROMOVC }}@github.com/Elias0900/tresoreriefront.git main
