@@ -103,4 +103,8 @@ export class AjoutVenteDirectorComponent {
         });
       }
 
+      retour(){
+        this.router.navigate(['/directeur'])
+      }
+
 }

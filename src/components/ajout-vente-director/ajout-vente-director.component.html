@@ -65,7 +65,11 @@
                         <input type="number" id="totalSansAssurance" formControlName="totalSansAssurance" required />
                     </div>
                 </div>
-                <button type="submit" class="btn btn-outline-success add-vente">Ajouter</button>
+                <div class="button-group">
+                    <button type="button" class="btn btn-outline-secondary" (click)="retour()">Annuler</button>
+                    <button type="submit" class="btn btn-outline-success">Ajouter</button>
+                </div>
+                
             </form>
 
         </section>
