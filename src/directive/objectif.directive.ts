@@ -10,7 +10,7 @@ export class PercentageColorDirective implements OnChanges {
 
   ngOnChanges(): void {
     if (this.appPercentageColor != null) {
-      const color = this.appPercentageColor >= 100 ? '#9b2223' : '#279649';
+      const color = this.appPercentageColor < 100 ? '#9b2223' : '#279649'; // Rouge si < 100, Vert sinon
       this.renderer.setStyle(this.el.nativeElement, 'color', color);
       this.renderer.setStyle(this.el.nativeElement, 'font-weight', 'bold');
     }

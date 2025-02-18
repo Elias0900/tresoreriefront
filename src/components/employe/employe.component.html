@@ -89,7 +89,7 @@
               <tr>
                 <td>{{ this.objectif }}</td>
                 <td>{{ this.bilan.realise }}</td>
-                <td [appPercentageColor]="this.bilan.pourcentageRealise">{{
+                <td [appPercentageColor]="formatPercentage(bilan.pourcentageRealise)">{{
                   formatPercentage(this.bilan.pourcentageRealise) }}</td>
                 <td>{{ formatPercentage(this.bilan.pourcentageFram) }}</td>
                 <td>{{ formatPercentage(this.bilan.pourcentageAssurance) }}</td>

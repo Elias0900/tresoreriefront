@@ -14,6 +14,7 @@ import { ModalObjectifComponent } from "../modal-objectif/modal-objectif.compone
 import { AgenceVoyage } from '../../back/model/agenceVoyage';
 import { User } from '../../back/model/user';
 import { TopbarComponent } from "../topbar/topbar.component";
+import { MinValuePipe } from "../value-min.pipe";
 
 
 @Component({
@@ -61,6 +62,7 @@ export class DirectorComponent implements OnInit, OnDestroy {
   readonly venteService = inject(VenteControllerService);
   readonly bilanService = inject(BilanControllerService);
   readonly agenceService = inject(AgenceVoyageControllerService);
+Math: any;
 
   constructor() {}
 
@@ -259,5 +261,9 @@ updateObjectif(newObjectif: number) {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  getLimitedEvolution(ventes: any): number {
+    return Math.min(Math.abs(ventes.evolution), 100);
   }
 }
