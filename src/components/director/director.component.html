@@ -3,116 +3,123 @@
 <div class="dashboard container py-4">
     <h1 class="display-4 text-center">Tableau de Bord</h1>
     <div class="row">
-        <!-- Première carte pour afficher les ventes de la veille -->
+        <!-- Ventes de la veille -->
         <div class="col-md-3 mb-4">
-            <div class="card rounded-3 border-opacity-50 border">
-                <div class="card-body d-flex justify-content-between align-items-center ">
-                    <div>
-                        <h5 class="card-title">Ventes de la veille</h5>
-                        <p class="card-text">
-                            {{ ventesHier.message || ventesHier.nombreVentes + ' ventes' }}
-                        </p>
-                    </div>
-                    <div *ngIf="ventesHier.evolution !== undefined">
-                        <i 
-                            [ngClass]="ventesHier.evolution > 0 ? 'pi pi-arrow-up text-success' : 'pi pi-arrow-down text-danger'"
-                            style="font-size: 1.5rem;">
-                        </i>
+            <div class="card custom-card">
+                <div class="card-header text-center">
+                    <h5 class="card-title">Ventes de la veille</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text d-flex align-items-center justify-content-center gap-2">
+                        {{ ventesHier.message || ventesHier.nombreVentes + ' ventes' }}
+                        <i *ngIf="ventesHier.evolution !== 0" class="pi" [ngClass]="{
+                            'pi-arrow-up text-success': ventesHier.evolution! > 0,
+                            'pi-arrow-down text-danger': ventesHier.evolution! < 0
+                        }"></i>
+                    </p>
+                    <div class="progress mt-2">
+                        <div class="progress-bar" [ngClass]="ventesHier.evolution! > 0 ? 'bg-success' : 'bg-danger'"
+                            role="progressbar" [style.width.%]="getLimitedEvolution(ventesHier)">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-          
 
-          <div class="col-md-3 mb-4">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Ventes du mois</h5>
-                <p class="card-text">
-                  {{ ventesMois.message || ventesMois.VenteMois + ' ventes' }}
-                  
-                  <!-- Indicateur d'évolution -->
-                  <i *ngIf="ventesMois.evolution! > 0" class="pi pi-arrow-up text-success"></i>
-                  <i *ngIf="ventesMois.evolution! < 0" class="pi pi-arrow-down text-danger"></i>
-                  <span *ngIf="ventesMois.evolution !== 0">
-                    ({{ ventesMois.evolution | number }})
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-3 mb-4">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Ventes de l'année</h5>
-                <p class="card-text">
-                  {{ ventesAn.message || ventesAn.ventesAn + ' ventes' }}
-                  
-                  <!-- Indicateur d'évolution -->
-                  <i *ngIf="ventesAn.evolution! > 0" class="pi pi-arrow-up text-success"></i>
-                  <i *ngIf="ventesAn.evolution! < 0" class="pi pi-arrow-down text-danger"></i>
-                  <span *ngIf="ventesAn.evolution !== 0">
-                    ({{ ventesAn.evolution | number }})
-                  </span>
-                </p>
-              </div>
-            </div>
-          </div>
-
-        <!-- Quatrième carte -->
+        <!-- Ventes du mois -->
         <div class="col-md-3 mb-4">
-          <div class="card rounded-3 border-opacity-50 border">
-            <div class="card-body">
-              <div class="flex flex-col md:flex-row gap-4">
-                <div class="md:w-1/2">
-                  <p-progressbar [value]="progression" [showValue]="true" pTooltip="{{ venteTotal }} €"></p-progressbar>
+            <div class="card custom-card">
+                <div class="card-header text-center">
+                    <h5 class="card-title">Ventes du mois</h5>
                 </div>
-              </div>
+                <div class="card-body">
+                    <p class="card-text d-flex align-items-center justify-content-center gap-2">
+                        {{ ventesMois.message || ventesMois.VenteMois }}
+                        <i *ngIf="ventesMois.evolution !== 0" class="pi" [ngClass]="{
+                            'pi-arrow-up text-success': ventesMois.evolution! > 0,
+                            'pi-arrow-down text-danger': ventesMois.evolution! < 0
+                        }"></i>
+                        <span *ngIf="ventesMois.evolution !== 0">
+                            ({{ ventesMois.evolution | number }})
+                        </span>
+                    </p>
+                    <div class="progress mt-2">
+                        <div class="progress-bar" [ngClass]="ventesMois.evolution! > 0 ? 'bg-success' : 'bg-danger'"
+                            role="progressbar" [style.width.%]="getLimitedEvolution(ventesMois)">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="d-flex align-items-center gap-2">
-              <input 
-                type="number" 
-                class="form-control form-control-sm w-50" 
-                [(ngModel)]="objectif" 
-                placeholder="Définissez votre objectif"
-                min="0"
-              />
-              <button 
-                type="button" 
-                class="btn btn-primary btn-sm d-flex align-items-center gap-1 px-3"
-                (click)="updateObjectif(objectif)"
-                pTooltip="Mettre à jour l'objectif"
-              >
-                <i class="pi pi-save"></i>
-                <span>Enregistrer</span>
-              </button>
-            </div>
-            
+        </div>
 
-            
-          
-            
-          </div>
-        </div>      
+        <!-- Ventes de l'année -->
+        <div class="col-md-3 mb-4">
+            <div class="card custom-card">
+                <div class="card-header text-center">
+                    <h5 class="card-title">Ventes de l'année</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text d-flex align-items-center justify-content-center gap-2">
+                        {{ ventesAn.message || ventesAn.ventesAn + ' ventes' }}
+                        <i *ngIf="ventesAn.evolution !== 0" class="pi" [ngClass]="{
+                            'pi-arrow-up text-success': ventesAn.evolution! > 0,
+                            'pi-arrow-down text-danger': ventesAn.evolution! < 0
+                        }"></i>
+                        <span *ngIf="ventesAn.evolution !== 0">
+                            ({{ ventesAn.evolution | number }})
+                        </span>
+                    </p>
+                    <div class="progress mt-2">
+                        <div class="progress-bar" [ngClass]="ventesAn.evolution! > 0 ? 'bg-success' : 'bg-danger'"
+                            role="progressbar" [style.width.%]="getLimitedEvolution(ventesAn)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Objectif de vente -->
+        <div class="col-md-3 mb-4">
+            <div class="card custom-card">
+                <div class="card-header text-center">
+                    <h5 class="card-title">Progression</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <input type="number" class="form-control form-control-sm w-50" [(ngModel)]="objectif"
+                            placeholder="Définissez votre objectif" min="0" />
+                        <button type="button" class="btn btn-primary btn-sm d-flex align-items-center gap-1 px-3"
+                            (click)="updateObjectif(objectif)" pTooltip="Mettre à jour l'objectif">
+                            <i class="pi pi-save"></i>
+                            <span>Enregistrer</span>
+                        </button>
+                    </div>
+                    <p-progressbar [value]="progression" [showValue]="true" pTooltip="{{ venteTotal }} €"></p-progressbar>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Section des graphiques -->
+    <!-- Graphiques -->
     <div class="row">
-        <!-- Graphique 1 -->
         <div class="col-md-6 mb-4">
             <app-chart-par-jour></app-chart-par-jour>
         </div>
-
-        <!-- Graphique 2 -->
         <div class="col-md-6 mb-4">
             <app-chart-par-mois></app-chart-par-mois>
         </div>
     </div>
-    <div class="row card rounded-3 border-opacity-50 border">
-        <app-list-all-vente></app-list-all-vente>
+
+    <!-- Liste des ventes -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card custom-card">
+                <div class="card-body">
+                    <app-list-all-vente></app-list-all-vente>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<app-modal-objectif  (objectifChanged)="updateObjectif($event)"></app-modal-objectif>
-
+<app-modal-objectif (objectifChanged)="updateObjectif($event)"></app-modal-objectif>

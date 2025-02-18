@@ -1,5 +1,43 @@
+/* Style général pour toutes les cartes */
+.custom-card {
+  height: 100%; /* Uniformisation de la hauteur */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+/* Style des en-têtes */
+.card-header {
+  background: #f8f9fa;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Titres centrés et homogènes */
+.card-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Alignement du texte */
+.card-text {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Bouton personnalisé */
 .btn-sm-custom {
-    padding: 0.25rem 0.5rem; /* Réduit la hauteur */
-    font-size: 0.875rem; /* Ajuste la taille du texte */
-  }
-  
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+/* Barre de progression */
+.progress {
+  height: 8px;
+  border-radius: 5px;
+}
