@@ -1,5 +1,6 @@
 <app-topbar></app-topbar>
 <div class="dashboard container py-4">
+
     <h1 class="display-4 text-center">Synthèse des Primes à payer</h1>
 
     <!-- Filtres : Sélection du vendeur et choix du mois -->
@@ -21,60 +22,67 @@
         </div>
     </div>
 
-    <div class="row card rounded-3 border-opacity-50 border">
-        <table *ngIf="listUser.length > 0; else emptyTable"
-            class="table table-outline-success table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>Vendeur</th>
-                    <th>Rôle</th>
-                    <th>Ventes Réalisées</th>
-                    <th>Pourcentage Objectif</th>
-                    <th>Pourcentage Assurance</th>
-                    <th>Pourcentage FRAM</th>
-                    <th>Primes Brut à Payer</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let user of listUser" [hidden]="selectedUserId && user.id !== selectedUserId">
-                    <td>
-                        <a [routerLink]="['/ventes-user', user.id]" class="text-decoration-none">
-                            {{ user.prenom }} {{ user.nom }}
-                        </a>
-                    </td>
-                    <td>{{ user.role }}</td>
-                    <td>{{ user.id !== undefined ? bilanUsers[user.id]?.realise ?? 'En cours...' : 'N/A' }} €</td>
-                    <td>
-                        {{ user.id !== undefined && bilanUsers[user.id] ? (bilanUsers[user.id].pourcentageRealise! * 100
-                        | number:'1.0-0') + ' %' : 'N/A' }}
-                    </td>
-                    <td>
-                        {{ user.id !== undefined && bilanUsers[user.id] ? (bilanUsers[user.id].pourcentageAssurance! *
-                        100 | number:'1.0-0') + ' %' : 'N/A' }}
-                    </td>
-                    <td>
-                        {{ user.id !== undefined && bilanUsers[user.id] ? (bilanUsers[user.id].pourcentageFram! * 100 |
-                        number:'1.0-0') + ' %' : 'N/A' }}
-                    </td>
-                    <td>
-                        {{ user.id !== undefined && bilanUsers[user.id]?.totalPrimesBrutes !== undefined 
-                            ? bilanUsers[user.id]?.totalPrimesBrutes?.toFixed(2) + ' €' 
-                            : 'En cours...' 
-                        }}
-                    </td>
-                    
-                </tr>
-            </tbody>
-        </table>
+
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card rounded-3 border-opacity-50 border p-3">
+                <table *ngIf="listUser.length > 0" class="table table-outline-success table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Vendeur</th>
+                            <th>Rôle</th>
+                            <th>Ventes Réalisées</th>
+                            <th>Pourcentage Objectif</th>
+                            <th>Pourcentage Assurance</th>
+                            <th>Pourcentage FRAM</th>
+                            <th>Primes Brut à Payer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of listUser" [hidden]="selectedUserId && user.id !== selectedUserId">
+                            <td>
+                                <a [routerLink]="['/ventes-user', user.id]" class="text-decoration-none">
+                                    {{ user.prenom }} {{ user.nom }}
+                                </a>
+                            </td>
+                            <td>{{ user.role }}</td>
+                            <td>{{ user.id !== undefined ? bilanUsers[user.id]?.realise ?? 'En cours...' : 'N/A' }} €
+                            </td>
+                            <td>
+                                {{ user.id !== undefined && bilanUsers[user.id] ?
+                                (bilanUsers[user.id].pourcentageRealise! * 100
+                                | number:'1.0-0') + ' %' : 'N/A' }}
+                            </td>
+                            <td>
+                                {{ user.id !== undefined && bilanUsers[user.id] ?
+                                (bilanUsers[user.id].pourcentageAssurance! *
+                                100 | number:'1.0-0') + ' %' : 'N/A' }}
+                            </td>
+                            <td>
+                                {{ user.id !== undefined && bilanUsers[user.id] ? (bilanUsers[user.id].pourcentageFram!
+                                * 100 |
+                                number:'1.0-0') + ' %' : 'N/A' }}
+                            </td>
+                            <td>
+                                {{ user.id !== undefined && bilanUsers[user.id]?.totalPrimesBrutes !== undefined
+                                ? bilanUsers[user.id]?.totalPrimesBrutes?.toFixed(2) + ' €'
+                                : 'En cours...'
+                                }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-</div>
 
-<!-- Message si aucun utilisateur -->
-<ng-template #emptyTable>
-    <p class="text-center">Aucun utilisateur trouvé.</p>
-</ng-template>
+    <!-- Centrage de la carte avec le graphique -->
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-10">
+            <div class="rounded-3 p-4 text-center">
+                <app-pourcentage-assurance></app-pourcentage-assurance>
+            </div>
+        </div>
+    </div>
 
-<!-- Bouton Retour centré -->
-<div class="d-flex justify-content-center mt-4">
-    <button class="btn btn-secondary" (click)="goBack()">Retour</button>
 </div>

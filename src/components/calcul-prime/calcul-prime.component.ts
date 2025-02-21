@@ -6,10 +6,11 @@ import { AgenceVoyageControllerService, BilanControllerService, BilanDto } from 
 import { RouterLink } from '@angular/router';
 import { PipeDatePipe } from '../pipe-date.pipe';
 import { TopbarComponent } from "../topbar/topbar.component";
+import { PourcentageAssuranceComponent } from "../chart/chart-pourcentage-prime/pourcentage-assurance/pourcentage-assurance.component";
 
 @Component({
   selector: 'app-calcul-prime',
-  imports: [FormsModule, CommonModule, RouterLink, TopbarComponent],
+  imports: [FormsModule, CommonModule, RouterLink, TopbarComponent, PourcentageAssuranceComponent],
   templateUrl: './calcul-prime.component.html',
 })
 export class CalculPrimeComponent {
