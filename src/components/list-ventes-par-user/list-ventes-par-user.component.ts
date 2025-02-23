@@ -11,11 +11,14 @@ import { CommonModule, Location } from '@angular/common';
   styleUrl: './list-ventes-par-user.component.scss'
 })
 export class ListVentesParUserComponent {
+  isSearching!: boolean;
+  searchQuery: string = '';
   constructor(private route: ActivatedRoute) {}
   readonly venteService = inject(VenteControllerService);
   readonly location = inject(Location);
    listVente: VenteDto[] = []
    userId!: number
+   
 
    getVentes(): void {
     if (!this.userId) { // Vérifie si l'ID est invalide
@@ -49,5 +52,34 @@ export class ListVentesParUserComponent {
     } else {
       console.error('ID utilisateur non fourni dans l’URL');
     }
+  }
+
+  onSearch(): void {
+    if (!this.userId) {
+      console.warn('Impossible de rechercher : agenceId non défini.');
+      return;
+    }
+  
+    this.isSearching = true;
+  
+    // Si la recherche est vide, afficher toutes les ventes
+    if (!this.searchQuery.trim()) {
+      this.getVentes(); // Recharge toutes les ventes
+      this.isSearching = false;
+      return;
+    }
+  
+    // Effectuer la recherche
+    this.venteService.searchVentesByAgence(this.userId, this.searchQuery).subscribe({
+      next: (data) => {
+        this.listVente = data;
+        console.log('Résultats de la recherche:', this.listVente);  // Vérification dans la console
+        this.isSearching = false;
+      },
+      error: (err) => {
+        console.error('Erreur lors de la recherche :', err);
+        this.isSearching = false;
+      }
+    });
   }
 }

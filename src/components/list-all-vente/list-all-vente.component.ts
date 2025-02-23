@@ -68,7 +68,7 @@ export class ListAllVenteComponent implements OnInit {
 
   // Récupère toutes les ventes
   getVentes(): void {
-    this.venteService.getAllVentes().subscribe({
+    this.venteService.getAllVentesMois(this.agenceId!).subscribe({
       next: (data) => {
         this.ventes = data;
         console.log('Ventes récupérées:', this.ventes);
